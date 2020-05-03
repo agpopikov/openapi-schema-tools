@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "jsx": "react",
+    "rootDir": "./src",
+    "allowJs": true,
+    "lib": [
+      "es6"
+    ],
+    "experimentalDecorators": true
+  }
+}

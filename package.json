@@ -1,0 +1,25 @@
+{
+  "name": "openapi-schema-tools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agpopikov/openapi-schema-tools.git"
+  },
+  "author": "Andrey Popikov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agpopikov/openapi-schema-tools/issues"
+  },
+  "homepage": "https://github.com/agpopikov/openapi-schema-tools#readme",
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "jest": "^25.5.4",
+    "ts-jest": "^25.4.0",
+    "typescript": "^3.8.3"
+  }
+}
