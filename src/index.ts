@@ -1,4 +1,4 @@
-enum JsonNodeType {
+export enum JsonNodeType {
     NULL = 'NULL',
     BOOLEAN = 'BOOLEAN',
     NUMBER = 'NUMBER',
@@ -13,7 +13,7 @@ enum JsonNodeType {
 
 }
 
-class JsonNode {
+export class JsonNode {
     name: string;
     type: JsonNodeType = JsonNodeType.NULL;
     children: JsonNode[] = [];
@@ -25,7 +25,7 @@ class JsonNode {
 }
 
 function getCorrespondingArrayType(type: JsonNodeType): JsonNodeType {
-    let map: {[key: string]: JsonNodeType} = {
+    let map: { [key: string]: JsonNodeType } = {
         'NULL': JsonNodeType.ARRAY_OF_ANY,
         'BOOLEAN': JsonNodeType.ARRAY_OF_BOOLEAN,
         'NUMBER': JsonNodeType.ARRAY_OF_NUMBER,
@@ -63,8 +63,8 @@ function parseNodes(root: [] | object, initialCall: boolean = false): JsonNode[]
     }
     let result: JsonNode[] = [];
     if (Array.isArray(root)) {
-        let types = root.map(v => parseType(v));
-        let type = types.reduce((acc, v) => acc === v ? v : JsonNodeType.NULL);
+        // let types = root.map(v => parseType(v));
+        // let type = types.reduce((acc, v) => acc === v ? v : JsonNodeType.NULL);
 
         // todo - detect array type here
     } else {
@@ -72,10 +72,13 @@ function parseNodes(root: [] | object, initialCall: boolean = false): JsonNode[]
         Object.entries(root).forEach(entry => {
             let [name, value] = entry;
             let node = new JsonNode(name, parseType(value));
-            if (node.type === JsonNodeType.ARRAY_OF_ANY && Array.isArray(root)) {
+            if (node.type === JsonNodeType.ARRAY_OF_ANY) {
                 node.children = parseNodes(value);
-                let types = root.map(v => parseType(v));
-                let type = types.reduce((acc, v) => acc === v ? v : JsonNodeType.NULL);
+                let types: JsonNodeType[] = value.map((v: any) => parseType(v));
+                let type = JsonNodeType.ARRAY_OF_ANY;
+                if (types.length > 0) {
+                    type = types.reduce((acc, v) => acc === v ? v : JsonNodeType.NULL);
+                }
                 node.type = getCorrespondingArrayType(type);
                 // todo - detect array children type to infer array detailed type
             }
